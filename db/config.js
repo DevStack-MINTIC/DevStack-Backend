@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { ErrorHandler } = require("../helpers/error");
 
 const dbConnection = async () => {
   try {
