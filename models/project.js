@@ -23,6 +23,7 @@ const ProjectSchema = Schema({
   },
   endDate: {
     type: Date,
+    default: null
   },
   leader: {
     type: Schema.Types.ObjectId,

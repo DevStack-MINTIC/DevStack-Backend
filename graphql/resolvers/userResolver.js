@@ -1,4 +1,3 @@
-const { User } = require('../../models');
 const { currentUser, register, login } = require('../../controllers/auth');
 const { getUsers, getUserById, updateUser} = require('../../controllers/users');
 

@@ -1,8 +1,13 @@
-// const { User } = require('../../models/user');
+const { getProjects, createProject, updateProject} = require('../../controllers/projects');
 
 const projectResolver = {
-  Query: {},
-  Mutation: {},
+  Query: {
+    getProjects
+  },
+  Mutation: {
+    createProject,
+    updateProject
+  },
 }
 
 module.exports = {

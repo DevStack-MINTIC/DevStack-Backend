@@ -1,6 +1,10 @@
 const { gql } = require('apollo-server-express')
 
 const projectSchema = gql`
+  type Query {
+    getProjects: [Project]
+  }
+
   type Project {
     _id: ID
     name: String!
@@ -23,6 +27,23 @@ const projectSchema = gql`
     STARTED
     IN_PROGRESS
     FINISHED
+  }
+
+  type Mutation {
+    createProject(
+      name: String!
+      generalObjective: String!
+      specificObjectives: [String]!
+      budget: Int!
+      leader: ID!
+    ): Project!
+    updateProject(
+      _id: ID!
+      name: String
+      generalObjective: String
+      specificObjectives: [String]
+      budget: Int
+    ): Project!
   }
 `
 
