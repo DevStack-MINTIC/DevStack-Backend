@@ -16,7 +16,6 @@ const progressSchema = Schema({
   },
   obsevation: {
     type: String,
-    required: true,
   },
 });
 

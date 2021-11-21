@@ -1,8 +1,13 @@
-// const { User } = require('../../models/user');
+const { getProgressByProjectId, createProgress, updateObsevation} = require('../../controllers/progress');
 
 const progressResolver = {
-  Query: {},
-  Mutation: {},
+  Query: {
+    getProgressByProjectId
+  },
+  Mutation: {
+    createProgress,
+    updateObsevation
+  },
 }
 
 module.exports = {
