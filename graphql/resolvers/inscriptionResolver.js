@@ -1,8 +1,13 @@
-// const { User } = require('../../models/user');
+const { getInscriptions, createInscription, updateInscription } = require('../../controllers/inscriptions');
 
 const inscriptionResolver = {
-  Query: {},
-  Mutation: {},
+  Query: {
+    getInscriptions
+  },
+  Mutation: {
+    createInscription,
+    updateInscription
+  },
 }
 
 module.exports = {
