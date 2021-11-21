@@ -1,40 +1,30 @@
-const { User } = require('../../models/user');
+const { User } = require('../../models');
+const { currentUser, register, login } = require('../../controllers/auth');
 
 const userResolver = {
   Query: {
+    currentUser,
     getUsers: async () => {
       try {
-        // const users = await User.find();
-        // return users;
-        return [];
+        const users = await User.find();
+        return users;
       } catch (error) {
-        throw new Error(`Error al traer usuarios: ${error}`);
+        throw new Error(`Error al traer los usuarios: ${error}`);
       }
     },
     getUser: async (root, args) => {
       try {
-        // const user = await User.findById(args.id);
-        // return user;
-        return {name: 'Felipe'};
+        const { id } = args;
+        const user = await User.findById(id);
+        return user;
       } catch (error) {
         throw new Error(`Error al traer usuario: ${error}`);
       }
     }
   },
   Mutation: {
-    createUser: async (root, args) => {
-      const newUser = new User({
-        name: args.name,
-        email: args.email,
-        password: args.password
-      });
-      try {
-        const savedUser = await newUser.save();
-        return savedUser;
-      } catch (error) {
-        throw new Error(`Error al crear usuario: ${error}`);
-      }
-    },
+    register,
+    login,
     updateUser: async (root, args) => {
       try {
         const user = await User.findOneAndUpdate({ _id: args.id }, {

@@ -1,57 +1,75 @@
-const { request, response } = require("express");
-const bcryptjs = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 
 const { User } = require("../models");
 const generateJWT = require("../helpers/generateJWT");
-const { ErrorHandler } = require("../helpers/error");
-const { googleVerify } = require("../helpers/googleVerify");
 
-const googleSingin = async (req = request, res = response, next) => {
-  const { token } = req.body;
+const currentUser = async (root, args, req) => {
+  if (!req.user) {
+    throw new Error('El usuario no se encuentra autenticado');
+  }
+  return User.findById(req.user._id);
+}
+
+const register = async (root, args) => {
   try {
-    const { email } = await googleVerify(token);
+    const { 
+      email, 
+      identificationNumber, 
+      fullName, 
+      password, 
+      role
+    } = args;
 
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email });
+    if (user) {
+      throw new Error('El usuario ya existe');
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const newUser = await User.create({
+      email,
+      identificationNumber,
+      fullName,
+      password: bcrypt.hashSync(password, salt),
+      role
+    });
+
+    return await generateJWT(newUser._id);
+  } catch (error) {
+    throw new Error(`Error al registrar al usuario: ${error}`);
+  }
+};
+
+const login = async (root, args) => {
+  try {
+    const { email, password } = args;
+    const user = await User.findOne({ email });
 
     if (!user) {
-      const data = {
-        email,
-      };
-      user = new User(data);
-      await user.save();
-      res.status(201).json({
-        message:
-          "Usuario creado exitosamente y pendiente de autorización. Contactar con el admistrador.",
-        statusCode: 201,
-      });
+      throw new Error('El usuario no existe');
     }
 
-    if (user.state === "PENDING") {
-      throw new ErrorHandler(
-        401,
-        "Usuario pendiente de autorización. Contactar con el admistrador"
-      );
+    // if (user.state === "PENDING") {
+    //   throw new Error("Usuario pendiente de autorización. Contactar con el admistrador");
+    // }
+
+    // if (user.state === "NO_AUTHORIZED") {
+    //   throw new Error("Usuario no autorizado");
+    // }
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw new Error('Contraseña incorrecta');
     }
 
-    if (user.state === "NO_AUTHORIZED") {
-      throw new ErrorHandler(403, "Usuario no autorizado");
-    }
-
-    const tokenUser = await generateJWT(user.id);
-
-    res.json({
-      message: "El usuario es correcto",
-      token: tokenUser,
-      userInfo: {
-        email: user.email,
-        role: user.role,
-      },
-    });
+    return await generateJWT(user._id);
   } catch (error) {
-    next(error);
+    throw new Error(`Error al logear al usuario: ${error}`);
   }
 };
 
 module.exports = {
-  googleSingin,
+  currentUser,
+  register,
+  login,
 };
