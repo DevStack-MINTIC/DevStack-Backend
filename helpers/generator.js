@@ -1,4 +1,10 @@
+const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
+
+const generatePasswordEncrypted = (password) => {
+  const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
+  return bcrypt.hashSync(password, salt);
+};
 
 const generateJWT = (_id) => {
   return new Promise((resolve, reject) => {
@@ -19,4 +25,7 @@ const generateJWT = (_id) => {
   });
 };
 
-module.exports = generateJWT;
+module.exports = {
+  generatePasswordEncrypted,
+  generateJWT
+};

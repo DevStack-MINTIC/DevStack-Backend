@@ -9,6 +9,7 @@ const UserSchema = Schema({
   identificationNumber: {
     type: String,
     required: [true, "El número de identificación es obligatorio"],
+    unique: true,
   },
   fullName: {
     type: String,

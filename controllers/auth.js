@@ -1,7 +1,6 @@
-const bcrypt = require('bcryptjs');
 
 const { User } = require("../models");
-const generateJWT = require("../helpers/generateJWT");
+const {generatePasswordEncrypted, generateJWT} = require("../helpers/generator");
 
 const currentUser = async (root, args, req) => {
   if (!req.user) {
@@ -25,12 +24,11 @@ const register = async (root, args) => {
       throw new Error('El usuario ya existe');
     }
 
-    const salt = bcrypt.genSaltSync(10);
     const newUser = await User.create({
       email,
       identificationNumber,
       fullName,
-      password: bcrypt.hashSync(password, salt),
+      password: generatePasswordEncrypted(password),
       role
     });
 

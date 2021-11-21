@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express')
 const userSchema = gql`
   type Query {
     currentUser: User
-    getUser(id: ID!): User
+    getUserById(_id: ID!): User
     getUsers: [User]
   }
 
@@ -12,7 +12,6 @@ const userSchema = gql`
     email: String!
     identificationNumber: String!
     fullName: String!
-    password: String!
     role: Role!
     status: Status
   }
@@ -30,16 +29,9 @@ const userSchema = gql`
   }
 
   type Mutation {
-    register(
-      email: String!, 
-      identificationNumber: String!, 
-      fullName: String!, 
-      password: String!, 
-      role: Role!
-      ): String
+    register(email: String!, identificationNumber: String!, fullName: String!, password: String!, role: Role!): String
     login(email: String!, password: String!): String
-    updateUser(id: ID!, name: String, email: String, password: Int): User
-    deleteUser(id: ID!): User
+    updateUser(fullName: String!, password: String!): User
   }
 `
 

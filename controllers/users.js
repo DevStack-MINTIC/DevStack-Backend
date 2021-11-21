@@ -1,39 +1,41 @@
-const { request, response } = require("express");
-
 const { User } = require("../models");
+const { generatePasswordEncrypted } = require("../helpers/generator");
 
-const getUsers = async (req = request, res = response) => {
-  const users = await User.find({});
-  res.json({
-    users,
-  });
-};
-
-const getUserById = async (req = request, res = response) => {
-  const { uid } = req.body;
-  let user = await User.findOne({ _id: uid });
-  res.json(user);
-};
-
-const updateUserById = async (req = request, res = response) => {
-  const { uid, role, state } = req.body;
-  if (!(role || state)) {
-    res.status(200).json({
-      statusCode: 200,
-      message: "Usuario no modificado",
-    });
+const getUsers = async (root, args) => {
+  try {
+    const users = await User.find();
+    return users;
+  } catch (error) {
+    throw new Error(`Error al traer los usuarios: ${error}`);
   }
+};
 
-  const userUpdated = {};
-  if (role) userUpdated["role"] = role;
-  if (state) userUpdated["state"] = state;
+const getUserById = async (root, args) => {
+  try {
+    const { _id } = args;
+    const user = await User.findById(_id);
+    return user;
+  } catch (error) {
+    throw new Error(`Error al traer usuario: ${error}`);
+  }
+};
 
-  const user = await User.findByIdAndUpdate(uid, userUpdated, { new: true });
-  res.json(user);
+const updateUser = async (root, args, req) => {
+  try {
+    const { fullName, password } = args;
+    const id = req.user._id;
+    const user = await User.findOneAndUpdate({ id }, {
+      fullName,
+      password: generatePasswordEncrypted(password),
+    }, { new: true });
+    return user;
+  } catch (error) {
+    throw new Error(`Error al actualizar usuario: ${error}`);
+  }
 };
 
 module.exports = {
   getUsers,
   getUserById,
-  updateUserById,
+  updateUser,
 };
