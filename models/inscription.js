@@ -8,12 +8,12 @@ const inscriptionSchema = Schema({
   },
   studentId: {
     type: Schema.Types.ObjectId,
-    ref: "Role",
+    ref: "User",
     required: true,
   },
   status: {
     type: String,
-    enum: ["ACCEPTED", "REJECTED"],
+    enum: ["ACCEPTED", "REJECTED", null],
     default: null,
   },
   addmissionDate: {

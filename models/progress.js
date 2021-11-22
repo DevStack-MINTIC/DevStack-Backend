@@ -10,7 +10,7 @@ const progressSchema = Schema({
     type: Date,
     default: Date.now,
   },
-  decription: {
+  description: {
     type: String,
     required: true,
   },

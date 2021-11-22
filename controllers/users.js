@@ -24,11 +24,11 @@ const updateUser = async (root, args, req) => {
   try {
     const { fullName, password } = args;
     const id = req.user._id;
-    const user = await User.findOneAndUpdate({ id }, {
+    await User.findOneAndUpdate({ id }, {
       fullName,
       password: generatePasswordEncrypted(password),
     }, { new: true });
-    return user;
+    return "El usuario se actualizó correctamente";
   } catch (error) {
     throw new Error(`Error al actualizar usuario: ${error}`);
   }

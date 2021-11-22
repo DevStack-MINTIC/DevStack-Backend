@@ -2,14 +2,14 @@ const { gql } = require('apollo-server-express')
 
 const inscriptionSchema = gql`
   type Query {
-    getInscriptions: [Inscription]
+    getInscriptions: [Inscription]!
   }
 
   type Inscription {
-    _id: ID
-    projectId: Project!
-    studentId: User!
-    status: Status!
+    _id: ID!
+    projectId: Project
+    studentId: User
+    status: Status
     admissionDate: String
     departureDate: String
   }
@@ -20,8 +20,8 @@ const inscriptionSchema = gql`
   }
 
   type Mutation {
-    createInscription(projectId: ID!, studentId: ID!): Inscription!
-    updateInscription(id: ID!, status: Status!): Inscription!
+    createInscription(projectId: ID!): String!
+    updateInscription(id: ID!, status: Status!): String!
   }
 `
 

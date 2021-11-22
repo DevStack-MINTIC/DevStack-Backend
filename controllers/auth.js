@@ -1,7 +1,7 @@
+const bcrypt = require('bcryptjs');
 
 const { User } = require("../models");
 const {generatePasswordEncrypted, generateJWT} = require("../helpers/generator");
-
 const currentUser = async (root, args, req) => {
   if (!req.user) {
     throw new Error('El usuario no se encuentra autenticado');
@@ -34,7 +34,7 @@ const register = async (root, args) => {
 
     return await generateJWT(newUser._id);
   } catch (error) {
-    throw new Error(`Error al registrar al usuario: ${error}`);
+    throw new Error(`Error al registrar usuario: ${error}`);
   }
 };
 
@@ -62,7 +62,7 @@ const login = async (root, args) => {
 
     return await generateJWT(user._id);
   } catch (error) {
-    throw new Error(`Error al logear al usuario: ${error}`);
+    throw new Error(`Error al logear usuario: ${error}`);
   }
 };
 

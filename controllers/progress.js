@@ -3,35 +3,35 @@ const { Progress } = require("../models");
 const getProgressByProjectId = async (root, args) => {
   try {
     const { projectId } = args;
-    const progress = await Progress.findById(projectId);
+    const progress = await Progress.find({ projectId }).populate("projectId");
     return progress;
   } catch (error) {
-    throw new Error(`Error al traer los usuarios: ${error}`);
+    throw new Error(`Error al traer los progresos del proyecto: ${error}`);
   }
 };
 
 const createProgress = async (root, args, req) => {
   try {
     const { projectId, description } = args;
-    const progress = await Project.create({
+    await Progress.create({
       projectId,
       description,
     });
-    return progress;
+    return "El progreso se creo correctamente";
   } catch (error) {
-    throw new Error(`Error al traer usuario: ${error}`);
+    throw new Error(`Error al crear el progreso del proyecto: ${error}`);
   }
 };
 
 const updateObsevation = async (root, args, req) => {
   try {
     const { _id, observation } = args;
-    const progress = await Project.findOneAndUpdate({ _id }, {
+    await Progress.findOneAndUpdate({ _id }, {
       observation
     }, { new: true });
-    return progress;
+    return "La observación se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar usuario: ${error}`);
+    throw new Error(`Error al actualizar la observación del proyecto: ${error}`);
   }
 };
 

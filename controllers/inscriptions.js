@@ -2,36 +2,39 @@ const { Inscription } = require("../models");
 
 const getInscriptions = async (root, args) => {
   try {
-    const inscription = await Inscription.find();
+    const inscription = await Inscription.find()
+      .populate("projectId")
+      .populate("studentId")
+      .populate("leader");
     return inscription;
   } catch (error) {
-    throw new Error(`Error al traer los usuarios: ${error}`);
+    throw new Error(`Error al traer las inscripciones: ${error}`);
   }
 };
 
 const createInscription = async (root, args, req) => {
   try {
-    const { projectId, studentId } = args;
-    const inscription = await Inscription.create({
+    const { projectId } = args;
+    await Inscription.create({
       projectId,
-      studentId,
+      studentId: req.user._id,
     });
-    return inscription;
+    return "La inscripción se creo correctamente";
   } catch (error) {
-    throw new Error(`Error al traer usuario: ${error}`);
+    throw new Error(`Error al crear la inscripción: ${error}`);
   }
 };
 
 const updateInscription = async (root, args, req) => {
   try {
     const { _id, status } = args;
-    const inscription = await Inscription.findOneAndUpdate({ _id }, {
+    await Inscription.findOneAndUpdate({ _id }, {
       status,
       admissionDate: Date.now()
     }, { new: true });
-    return inscription;
+    return "La inscripción se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar usuario: ${error}`);
+    throw new Error(`Error al actualizar la inscripción: ${error}`);
   }
 };
 

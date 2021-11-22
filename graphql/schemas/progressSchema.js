@@ -2,14 +2,14 @@ const { gql } = require('apollo-server-express')
 
 const progressSchema = gql`
   type Query {
-    getProgressByProjectId(projectId: ID!): [Progress]
+    getProgressByProjectId(projectId: ID!): [Progress]!
   }
 
   type Progress {
-    _id: ID
-    projectId: Project!
+    _id: ID!
+    projectId: Project
     progressDate: String
-    description: String!
+    description: String
     observation: String
   }
 
@@ -17,11 +17,11 @@ const progressSchema = gql`
     createProgress(
       projectId: ID!
       description: String!
-    ): Progress
+    ): String!
     updateObsevation(
       _id: ID!
       observation: String!
-    ): Progress
+    ): String!
   }
 `
 

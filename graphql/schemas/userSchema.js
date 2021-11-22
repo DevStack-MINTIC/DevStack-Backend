@@ -8,11 +8,11 @@ const userSchema = gql`
   }
 
   type User {
-    _id: ID
-    email: String!
-    identificationNumber: String!
-    fullName: String!
-    role: Role!
+    _id: ID!
+    email: String
+    identificationNumber: String
+    fullName: String
+    role: Role
     status: Status
   }
 
@@ -31,7 +31,7 @@ const userSchema = gql`
   type Mutation {
     register(email: String!, identificationNumber: String!, fullName: String!, password: String!, role: Role!): String
     login(email: String!, password: String!): String
-    updateUser(fullName: String!, password: String!): User
+    updateUser(fullName: String!, password: String!): String
   }
 `
 

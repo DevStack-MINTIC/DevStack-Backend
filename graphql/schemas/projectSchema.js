@@ -2,18 +2,18 @@ const { gql } = require('apollo-server-express')
 
 const projectSchema = gql`
   type Query {
-    getProjects: [Project]
+    getProjects: [Project]!
   }
 
   type Project {
-    _id: ID
-    name: String!
-    generalObjective: String!
-    specificObjectives: [String]!
-    budget: Int!
+    _id: ID!
+    name: String
+    generalObjective: String
+    specificObjectives: [String]
+    budget: Int
     startDate: String
     endDate: String
-    leader: User!
+    leader: User
     status: Status
     phase: Phase
   }
@@ -35,15 +35,14 @@ const projectSchema = gql`
       generalObjective: String!
       specificObjectives: [String]!
       budget: Int!
-      leader: ID!
-    ): Project!
+    ): String!
     updateProject(
       _id: ID!
       name: String
       generalObjective: String
       specificObjectives: [String]
       budget: Int
-    ): Project!
+    ): String!
   }
 `
 
