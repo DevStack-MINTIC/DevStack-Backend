@@ -19,7 +19,7 @@ const ProjectSchema = Schema({
   },
   startDate: {
     type: Date,
-    default: Date.now,
+    default: null,
   },
   endDate: {
     type: Date,
@@ -39,8 +39,8 @@ const ProjectSchema = Schema({
   phase: {
     type: String,
     required: [true, "La fase es obligatoria"],
-    enum: ["STARTED", "IN_PROGRESS", "FINISHED"],
-    default: "STARTED",
+    enum: ["STARTED", "IN_PROGRESS", "FINISHED", null],
+    default: null,
   }
 });
 
