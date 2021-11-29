@@ -18,6 +18,10 @@ const progressSchema = gql`
       projectId: ID!
       description: String!
     ): String!
+    updateProgress(
+      _id: ID!
+      description: String!
+    ): String!
     updateObsevation(
       _id: ID!
       observation: String!

@@ -1,4 +1,4 @@
-const { getProgressByProjectId, createProgress, updateObsevation} = require('../../controllers/progress');
+const { getProgressByProjectId, createProgress, updateProgress, updateObsevation} = require('../../controllers/progress');
 
 const progressResolver = {
   Query: {
@@ -6,6 +6,7 @@ const progressResolver = {
   },
   Mutation: {
     createProgress,
+    updateProgress,
     updateObsevation
   },
 }

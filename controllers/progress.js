@@ -23,6 +23,19 @@ const createProgress = async (root, args, req) => {
   }
 };
 
+const updateProgress = async (root, args, req) => {
+  try {
+    const { _id, description } = args;
+    await Progress.findOneAndUpdate({ _id }, {
+      description
+    }, { new: true });
+    return "El avance se actualizó correctamente";
+  } catch (error) {
+    throw new Error(`Error al actualizar el avance del proyecto: ${error}`);
+  }
+};
+
+
 const updateObsevation = async (root, args, req) => {
   try {
     const { _id, observation } = args;
@@ -38,5 +51,6 @@ const updateObsevation = async (root, args, req) => {
 module.exports = {
   getProgressByProjectId,
   createProgress,
+  updateProgress,
   updateObsevation,
 };
