@@ -37,12 +37,14 @@ const projectSchema = gql`
       specificObjectives: [String]!
       budget: Int!
     ): String!
+    approveProject(id: ID!): String!
     updateProject(
       _id: ID!
       name: String
       generalObjective: String
       specificObjectives: [String]
       budget: Int
+      phase: Phase
     ): String!
   }
 `

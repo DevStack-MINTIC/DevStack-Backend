@@ -1,4 +1,10 @@
-const { getProjects, getProjectById, createProject, updateProject } = require('../../controllers/projects');
+const { 
+  getProjects, 
+  getProjectById, 
+  createProject, 
+  approveProject, 
+  updateProject 
+} = require('../../controllers/projects');
 
 const projectResolver = {
   Query: {
@@ -7,10 +13,11 @@ const projectResolver = {
   },
   Mutation: {
     createProject,
+    approveProject,
     updateProject
   },
 }
 
 module.exports = {
-    projectResolver,
+  projectResolver,
 };
