@@ -9,6 +9,16 @@ const getProjects = async (root, args) => {
   }
 };
 
+const getProjectById = async (root, args) => {
+  try {
+    const { _id } = args;
+    const project = await Project.findById(_id);
+    return project;
+  } catch (error) {
+    throw new Error(`Error al traer el proyecto: ${error}`);
+  }
+};
+
 const createProject = async (root, args, req) => {
   try {
     const { name, generalObjective, specificObjectives, budget } = args;
@@ -42,6 +52,7 @@ const updateProject = async (root, args, req) => {
 
 module.exports = {
   getProjects,
+  getProjectById,
   createProject,
   updateProject,
 };

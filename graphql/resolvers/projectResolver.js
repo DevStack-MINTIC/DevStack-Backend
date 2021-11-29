@@ -1,8 +1,9 @@
-const { getProjects, createProject, updateProject} = require('../../controllers/projects');
+const { getProjects, getProjectById, createProject, updateProject } = require('../../controllers/projects');
 
 const projectResolver = {
   Query: {
-    getProjects
+    getProjects,
+    getProjectById
   },
   Mutation: {
     createProject,

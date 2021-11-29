@@ -3,6 +3,7 @@ const { gql } = require('apollo-server-express')
 const projectSchema = gql`
   type Query {
     getProjects: [Project]!
+    getProjectById(id: ID!): Project
   }
 
   type Project {
