@@ -20,6 +20,18 @@ const getUserById = async (root, args) => {
   }
 };
 
+const updateUserStatus = async (root, args, req) => {
+  try {
+    const { _id, status } = args;
+    await User.findOneAndUpdate({ _id }, {
+      status,
+    }, { new: true });
+    return "El usuario se actualizó correctamente";
+  } catch (error) {
+    throw new Error(`Error al actualizar usuario: ${error}`);
+  }
+};
+
 const updateUser = async (root, args, req) => {
   try {
     const { fullName, password } = args;
@@ -37,5 +49,6 @@ const updateUser = async (root, args, req) => {
 module.exports = {
   getUsers,
   getUserById,
+  updateUserStatus,
   updateUser,
 };
