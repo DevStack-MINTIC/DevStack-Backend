@@ -1,4 +1,4 @@
-const { Progress } = require("../models");
+const { Progress, Project } = require("../models");
 
 const getProgressByProjectId = async (root, args) => {
   try {
@@ -13,6 +13,14 @@ const getProgressByProjectId = async (root, args) => {
 const createProgress = async (root, args, req) => {
   try {
     const { projectId, description } = args;
+
+    const progress = Progress.find({ projectId });
+    if (progress.lenth === 0) {
+      await Project.findOneAndUpdate({ _id: projectId }, {
+        phase: "STARTED"
+      });
+    }
+    
     await Progress.create({
       projectId,
       description,
