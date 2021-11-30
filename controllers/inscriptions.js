@@ -25,11 +25,11 @@ const createInscription = async (root, args, req) => {
   }
 };
 
-const updateInscription = async (root, args, req) => {
+const approveInscription = async (root, args, req) => {
   try {
-    const { _id, status } = args;
+    const { _id } = args;
     await Inscription.findOneAndUpdate({ _id }, {
-      status,
+      status: "ACCEPTED",
       admissionDate: Date.now()
     }, { new: true });
     return "La inscripción se actualizó correctamente";
@@ -41,5 +41,5 @@ const updateInscription = async (root, args, req) => {
 module.exports = {
   getInscriptions,
   createInscription,
-  updateInscription,
+  approveInscription,
 };

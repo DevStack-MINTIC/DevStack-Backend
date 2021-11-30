@@ -44,7 +44,6 @@ const projectSchema = gql`
       generalObjective: String
       specificObjectives: [String]
       budget: Int
-      phase: Phase
     ): String!
   }
 `
