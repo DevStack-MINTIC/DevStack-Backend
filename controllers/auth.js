@@ -21,7 +21,12 @@ const register = async (root, args) => {
 
     const user = await User.findOne({ email });
     if (user) {
-      throw new Error('El usuario ya existe');
+      throw new Error('El usuario ya se encuentra registrado con el correo ingresado');
+    }
+
+    const userIN = await User.findOne({ identificationNumber });
+    if (userIN) {
+      throw new Error('El usuario ya se encuentra registrado con el numero de identificación ingresado');
     }
 
     const newUser = await User.create({
@@ -32,7 +37,10 @@ const register = async (root, args) => {
       role
     });
 
-    return await generateJWT(newUser._id);
+    return JSON.stringify({
+      token: await generateJWT(newUser._id),
+      userRole: newUser.role
+    });
   } catch (error) {
     throw new Error(`Error al registrar usuario: ${error}`);
   }
@@ -47,20 +55,23 @@ const login = async (root, args) => {
       throw new Error('El usuario no existe');
     }
 
-    // if (user.state === "PENDING") {
-    //   throw new Error("Usuario pendiente de autorización. Contactar con el admistrador");
-    // }
+    if (user.state === "PENDING") {
+      throw new Error("Usuario pendiente de autorización. Contactar con el admistrador");
+    }
 
-    // if (user.state === "NO_AUTHORIZED") {
-    //   throw new Error("Usuario no autorizado");
-    // }
+    if (user.state === "NO_AUTHORIZED") {
+      throw new Error("Usuario no autorizado");
+    }
 
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
       throw new Error('Contraseña incorrecta');
     }
 
-    return await generateJWT(user._id);
+    return JSON.stringify({
+      token: await generateJWT(user._id),
+      userRole: user.role
+    });
   } catch (error) {
     throw new Error(`Error al logear usuario: ${error}`);
   }
