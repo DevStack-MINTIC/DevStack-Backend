@@ -12,7 +12,7 @@ const getProjects = async (root, args) => {
 const getProjectById = async (root, args) => {
   try {
     const { _id } = args;
-    const project = await Project.findById(_id);
+    const project = await Project.findById(_id).populate("leader");
     return project;
   } catch (error) {
     throw new Error(`Error al traer el proyecto: ${error}`);
