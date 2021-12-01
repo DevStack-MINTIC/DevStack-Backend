@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express')
 const projectSchema = gql`
   type Query {
     getProjects: [Project]!
-    getProjectById(id: ID!): Project
+    getProjectById(_id: ID!): Project
   }
 
   type Project {
@@ -37,7 +37,7 @@ const projectSchema = gql`
       specificObjectives: [String]!
       budget: Int!
     ): String!
-    approveProject(id: ID!): String!
+    approveProject(_id: ID!): String!
     updateProject(
       _id: ID!
       name: String

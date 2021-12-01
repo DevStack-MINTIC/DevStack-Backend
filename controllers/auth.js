@@ -39,7 +39,10 @@ const register = async (root, args) => {
 
     return JSON.stringify({
       token: await generateJWT(newUser._id),
-      userRole: newUser.role
+      user: {
+        id: newUser._id,
+        role: newUser.role
+      }
     });
   } catch (error) {
     throw new Error(`Error al registrar usuario: ${error}`);
@@ -70,7 +73,10 @@ const login = async (root, args) => {
 
     return JSON.stringify({
       token: await generateJWT(user._id),
-      userRole: user.role
+      user: {
+        id: user._id,
+        role: user.role
+      }
     });
   } catch (error) {
     throw new Error(`Error al logear usuario: ${error}`);
