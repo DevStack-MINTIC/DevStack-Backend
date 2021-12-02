@@ -14,7 +14,7 @@ const progressSchema = Schema({
     type: String,
     required: true,
   },
-  obsevation: {
+  observation: {
     type: String,
   },
 });
