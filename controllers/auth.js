@@ -62,7 +62,7 @@ const login = async (root, args) => {
       throw new Error("Usuario pendiente de autorización. Contactar con el admistrador");
     }
 
-    if (user.state === "NO_AUTHORIZED") {
+    if (user.state === "NOT_AUTHORIZED") {
       throw new Error("Usuario no autorizado");
     }
 

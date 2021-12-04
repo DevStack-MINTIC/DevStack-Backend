@@ -1,8 +1,10 @@
 const { User } = require("../models");
 const { generatePasswordEncrypted } = require("../helpers/generator");
 
-const getUsers = async (root, args) => {
+const getUsers = async (root, args, req) => {
   try {
+    const role = req.user.role;
+    if(!["ADMIN", "LEADER"].includes(role)) throw new Error("Rol no autorizado");
     const users = await User.find();
     return users;
   } catch (error) {
@@ -10,8 +12,10 @@ const getUsers = async (root, args) => {
   }
 };
 
-const getUserById = async (root, args) => {
+const getUserById = async (root, args, req) => {
   try {
+    const role = req.user.role;
+    if(!["ADMIN", "LEADER"].includes(role)) throw new Error("Rol no autorizado");
     const { _id } = args;
     const user = await User.findById(_id);
     return user;
@@ -23,6 +27,10 @@ const getUserById = async (root, args) => {
 const updateUserStatus = async (root, args, req) => {
   try {
     const { _id, status } = args;
+    const role = req.user.role;
+    if(!["ADMIN", "LEADER"].includes(role)) throw new Error("Rol no autorizado");
+    if (role === "LEADER" && status === "NOT_AUTHORIZED") throw new Error("El lider no tiene permitido esta acción");
+    
     await User.findOneAndUpdate({ _id }, {
       status,
     }, { new: true });

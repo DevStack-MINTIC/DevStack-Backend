@@ -1,7 +1,10 @@
 const { Inscription } = require("../models");
 
-const getInscriptions = async (root, args) => {
+const getInscriptions = async (root, args, req) => {
   try {
+    const role = req.user.role;
+    if(!["ADMIN", "LEADER"].includes(role)) throw new Error("El rol no puede ver las inscripciones");
+
     const inscription = await Inscription.find()
       .populate("projectId")
       .populate("studentId")
@@ -14,6 +17,9 @@ const getInscriptions = async (root, args) => {
 
 const createInscription = async (root, args, req) => {
   try {
+    const role = req.user.role;
+    if(role !== "STUDENT") throw new Error("El rol no puede crear una inscripción");
+
     const { projectId } = args;
     await Inscription.create({
       projectId,

@@ -1,6 +1,6 @@
 const { Project } = require("../models");
 
-const getProjects = async (root, args) => {
+const getProjects = async (root, args, req) => {
   try {
     const projects = await Project.find().populate("leader");
     return projects;
@@ -9,7 +9,7 @@ const getProjects = async (root, args) => {
   }
 };
 
-const getProjectById = async (root, args) => {
+const getProjectById = async (root, args, req) => {
   try {
     const { _id } = args;
     const project = await Project.findById(_id).populate("leader");
@@ -21,6 +21,9 @@ const getProjectById = async (root, args) => {
 
 const createProject = async (root, args, req) => {
   try {
+    const role = req.user.role;
+    if(role !== "LEADER") throw new Error("El rol no puede crear proyectos");
+    
     const { name, generalObjective, specificObjectives, budget } = args;
     await Project.create({
       name,
@@ -37,6 +40,8 @@ const createProject = async (root, args, req) => {
 
 const approveProject = async (root, args, req) => {
   try {
+    const role = req.user.role;
+    if(role !== "ADMIN") throw new Error("El rol no puede aprobar el proyecto");
     const { _id } = args;
     await Project.findOneAndUpdate({ _id }, {
       startDate: Date.now(),
@@ -50,6 +55,8 @@ const approveProject = async (root, args, req) => {
 
 const updateProject = async (root, args, req) => {
   try {
+    const role = req.user.role;
+    if(role !== "LEADER") throw new Error("El rol no puede crear proyectos");
     const { _id, name, generalObjective, specificObjectives, budget} = args;
     await Project.findOneAndUpdate({ _id }, {
       name,
