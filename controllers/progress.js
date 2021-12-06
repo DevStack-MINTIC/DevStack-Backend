@@ -2,10 +2,10 @@ const { Progress, Project, Inscription } = require("../models");
 
 const getProgressByProjectId = async (root, args, req) => {
   try {
-    const { _id, role } = req.user;
-    if(role !== "STUDENT") throw new Error("El rol no puede ver avances");
-    const inscription = await Inscription.findOne({ studentId: _id });
-    if(inscription?.status !== "ACCEPTED") throw new Error("El estudiante no se encuentra inscrito al proyecto");
+    // const { _id, role } = req.user;
+    // if(role !== "STUDENT") throw new Error("El rol no puede ver avances");
+    // const inscription = await Inscription.findOne({ studentId: _id });
+    // if(inscription?.status !== "ACCEPTED") throw new Error("El estudiante no se encuentra inscrito al proyecto");
     
     const { projectId } = args;
     const progress = await Progress.find({ projectId }).populate("projectId");
