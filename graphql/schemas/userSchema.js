@@ -13,7 +13,7 @@ const userSchema = gql`
     identificationNumber: String
     fullName: String
     role: Role
-    status: Status
+    State: State
   }
 
   enum Role {
@@ -22,7 +22,7 @@ const userSchema = gql`
     STUDENT
   }
 
-  enum Status {
+  enum State {
     PENDING
     AUTHORIZED
     NOT_AUTHORIZED
