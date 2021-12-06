@@ -41,10 +41,12 @@ const updateUser = async (root, args, req) => {
   try {
     const { fullName, password } = args;
     const id = req.user._id;
-    await User.findOneAndUpdate({ id }, {
-      fullName,
-      password: generatePasswordEncrypted(password),
-    }, { new: true });
+
+    const updateObject = {};
+    if (fullName) updateObject["fullName"] = fullName;
+    if (password) updateObject["password"] = generatePasswordEncrypted(password);
+
+    await User.findOneAndUpdate({ _id: id }, updateObject, { new: true });
     return "El usuario se actualizó correctamente";
   } catch (error) {
     throw new Error(`Error al actualizar usuario: ${error}`);
