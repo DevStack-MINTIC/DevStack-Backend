@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express')
 const userSchema = gql`
   type Query {
     currentUser: User
-    getUserById(_id: ID!): User
+    getUserById: User
     getUsers: [User]
   }
 
