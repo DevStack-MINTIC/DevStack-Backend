@@ -11,6 +11,11 @@ const inscriptionSchema = Schema({
     ref: "User",
     required: true,
   },
+  leaderId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   status: {
     type: String,
     enum: ["ACCEPTED", "REJECTED", null],

@@ -9,6 +9,7 @@ const inscriptionSchema = gql`
     _id: ID!
     projectId: Project
     studentId: User
+    leaderId: User
     status: Status
     admissionDate: String
     departureDate: String

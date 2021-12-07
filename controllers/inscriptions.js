@@ -3,12 +3,12 @@ const { Inscription } = require("../models");
 const getInscriptions = async (root, args, req) => {
   try {
     const role = req.user.role;
-    if(!["ADMIN", "LEADER"].includes(role)) throw new Error("El rol no puede ver las inscripciones");
+    if(role === "LEADER") throw new Error("El rol no puede ver las inscripciones");
 
-    const inscription = await Inscription.find()
+    const inscription = await Inscription.find({ leaderId: req.user._id })
       .populate("projectId")
       .populate("studentId")
-      .populate("leader");
+      .populate("leaderId");
     return inscription;
   } catch (error) {
     throw new Error(error);
