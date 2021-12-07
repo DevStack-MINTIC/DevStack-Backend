@@ -5,7 +5,7 @@ const getProjects = async (root, args, req) => {
     const projects = await Project.find().populate("leader");
     return projects;
   } catch (error) {
-    throw new Error(`Error al traer los proyectos: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -15,7 +15,7 @@ const getProjectById = async (root, args, req) => {
     const project = await Project.findById(_id).populate("leader");
     return project;
   } catch (error) {
-    throw new Error(`Error al traer el proyecto: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -34,7 +34,7 @@ const createProject = async (root, args, req) => {
     });
     return "El proyecto se creo correctamente";
   } catch (error) {
-    throw new Error(`Error al crear el proyecto: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -49,7 +49,7 @@ const approveProject = async (root, args, req) => {
     }, { new: true }).populate("leader");
     return "El proyecto se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar el proyecto: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -66,7 +66,7 @@ const updateProject = async (root, args, req) => {
     }, { new: true }).populate("leader");
     return "El proyecto se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar el proyecto: ${error}`);
+    throw new Error(error);
   }
 };
 

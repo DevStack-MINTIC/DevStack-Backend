@@ -8,7 +8,7 @@ const getUsers = async (root, args, req) => {
     const users = await User.find();
     return users;
   } catch (error) {
-    throw new Error(`Error al traer los usuarios: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -17,7 +17,7 @@ const getUserById = async (root, args, req) => {
     const user = await User.findById(req.user._id);
     return user;
   } catch (error) {
-    throw new Error(`Error al traer usuario: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -33,7 +33,7 @@ const updateUserStatus = async (root, args, req) => {
     }, { new: true });
     return "El usuario se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar usuario: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -49,7 +49,7 @@ const updateUser = async (root, args, req) => {
     await User.findOneAndUpdate({ _id: id }, updateObject, { new: true });
     return "El usuario se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar usuario: ${error}`);
+    throw new Error(error);
   }
 };
 

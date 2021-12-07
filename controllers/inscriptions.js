@@ -11,7 +11,7 @@ const getInscriptions = async (root, args, req) => {
       .populate("leader");
     return inscription;
   } catch (error) {
-    throw new Error(`Error al traer las inscripciones: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -27,7 +27,7 @@ const createInscription = async (root, args, req) => {
     });
     return "La inscripción se creo correctamente";
   } catch (error) {
-    throw new Error(`Error al crear la inscripción: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -40,7 +40,7 @@ const approveInscription = async (root, args, req) => {
     }, { new: true });
     return "La inscripción se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar la inscripción: ${error}`);
+    throw new Error(error);
   }
 };
 

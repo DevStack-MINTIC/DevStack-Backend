@@ -37,15 +37,9 @@ const register = async (root, args) => {
       role
     });
 
-    return JSON.stringify({
-      token: await generateJWT(newUser._id),
-      user: {
-        id: newUser._id,
-        role: newUser.role
-      }
-    });
+    return "Usuario registrado correctamente";
   } catch (error) {
-    throw new Error(`Error al registrar usuario: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -79,7 +73,7 @@ const login = async (root, args) => {
       }
     });
   } catch (error) {
-    throw new Error(`Error al logear usuario: ${error}`);
+    throw new Error(error);
   }
 };
 

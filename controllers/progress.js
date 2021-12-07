@@ -11,7 +11,7 @@ const getProgressByProjectId = async (root, args, req) => {
     const progress = await Progress.find({ projectId }).populate("projectId");
     return progress;
   } catch (error) {
-    throw new Error(`Error al traer los progresos del proyecto: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -36,7 +36,7 @@ const createProgress = async (root, args, req) => {
     });
     return "El progreso se creo correctamente";
   } catch (error) {
-    throw new Error(`Error al crear el progreso del proyecto: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -53,7 +53,7 @@ const updateProgress = async (root, args, req) => {
     }, { new: true });
     return "El avance se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar el avance del proyecto: ${error}`);
+    throw new Error(error);
   }
 };
 
@@ -69,7 +69,7 @@ const updateObsevation = async (root, args, req) => {
     }, { new: true });
     return "La observación se actualizó correctamente";
   } catch (error) {
-    throw new Error(`Error al actualizar la observación del proyecto: ${error}`);
+    throw new Error(error);
   }
 };
 
