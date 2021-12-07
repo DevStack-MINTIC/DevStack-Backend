@@ -1,8 +1,9 @@
-const { getInscriptions, createInscription, approveInscription } = require('../../controllers/inscriptions');
+const { getInscriptions, createInscription, getInscriptionsByStudentId, approveInscription } = require('../../controllers/inscriptions');
 
 const inscriptionResolver = {
   Query: {
-    getInscriptions
+    getInscriptions,
+    getInscriptionsByStudentId
   },
   Mutation: {
     createInscription,

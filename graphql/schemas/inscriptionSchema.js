@@ -3,6 +3,7 @@ const { gql } = require('apollo-server-express')
 const inscriptionSchema = gql`
   type Query {
     getInscriptions: [Inscription]!
+    getInscriptionsByStudentId: [ID]!
   }
 
   type Inscription {

@@ -1,4 +1,4 @@
-const { Inscription, User } = require("../models");
+const { Inscription, User, Project } = require("../models");
 
 const getInscriptions = async (root, args, req) => {
   try {
@@ -15,14 +15,29 @@ const getInscriptions = async (root, args, req) => {
   }
 };
 
+const getInscriptionsByStudentId = async (root, args, req) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if(user.role !== "STUDENT") throw new Error("El rol no puede ver las inscripciones");
+
+    const inscriptions = await Inscription.find({ studentId: req.user._id });
+    return inscriptions.map(inscription => inscription.projectId);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const createInscription = async (root, args, req) => {
   try {
     const user = await User.findById(req.user._id);
     if(user.role !== "STUDENT") throw new Error("El rol no puede crear una inscripción");
 
     const { projectId } = args;
+    const project = await Project.findById(projectId);
+
     await Inscription.create({
       projectId,
+      leaderId: project.leader,
       studentId: req.user._id,
     });
     return "La inscripción se creo correctamente";
@@ -50,5 +65,6 @@ const approveInscription = async (root, args, req) => {
 module.exports = {
   getInscriptions,
   createInscription,
+  getInscriptionsByStudentId,
   approveInscription,
 };
