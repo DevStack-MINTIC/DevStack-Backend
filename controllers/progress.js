@@ -17,9 +17,9 @@ const getProgressByProjectId = async (root, args, req) => {
 
 const createProgress = async (root, args, req) => {
   try {
-    const { _id, role } = req.user;
-    if(role !== "STUDENT") throw new Error("El rol no puede crear avances");
-    const inscription = await Inscription.findOne({ studentId: _id });
+    const user = await User.findById(req.user._id);
+    if(user.role !== "STUDENT") throw new Error("El rol no puede crear avances");
+    const inscription = await Inscription.findOne({ studentId: req.user._id });
     if(inscription?.status !== "ACCEPTED") throw new Error("El estudiante no se encuentra inscrito al proyecto");
 
     const { projectId, description } = args;

@@ -3,8 +3,8 @@ const { generatePasswordEncrypted } = require("../helpers/generator");
 
 const getUsers = async (root, args, req) => {
   try {
-    const role = req.user.role;
-    if(!["ADMIN", "LEADER"].includes(role)) throw new Error("Rol no autorizado");
+    const user = await User.findById(req.user._id);
+    if(!["ADMIN", "LEADER"].includes(user.role)) throw new Error("Rol no tiene permitido ver los usuarios");
     const users = await User.find();
     return users;
   } catch (error) {
