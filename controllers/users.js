@@ -23,10 +23,11 @@ const getUserById = async (root, args, req) => {
 
 const updateUserState = async (root, args, req) => {
   try {
+    const user = await User.findById(req.user._id);
+    if(!["ADMIN", "LEADER"].includes(user.role)) throw new Error("Rol no autorizado");
+
     const { _id, state } = args;
-    const role = req.user.role;
-    if(!["ADMIN", "LEADER"].includes(role)) throw new Error("Rol no autorizado");
-    if (role === "LEADER" && state === "NOT_AUTHORIZED") throw new Error("El lider no tiene permitido esta acción");
+    if (user.role === "LEADER" && state === "NOT_AUTHORIZED") throw new Error("El lider no tiene permitido esta acción");
     
     await User.findOneAndUpdate({ _id }, {
       state,
