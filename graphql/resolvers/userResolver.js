@@ -1,5 +1,5 @@
 const { currentUser, register, login } = require('../../controllers/auth');
-const { getUsers, getUserById, updateUserStatus, updateUser } = require('../../controllers/users');
+const { getUsers, getUserById, updateUserState, updateUser } = require('../../controllers/users');
 
 const userResolver = {
   Query: {
@@ -10,7 +10,7 @@ const userResolver = {
   Mutation: {
     register,
     login,
-    updateUserStatus,
+    updateUserState,
     updateUser
   }
 }

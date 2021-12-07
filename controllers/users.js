@@ -21,7 +21,7 @@ const getUserById = async (root, args, req) => {
   }
 };
 
-const updateUserStatus = async (root, args, req) => {
+const updateUserState = async (root, args, req) => {
   try {
     const { _id, state } = args;
     const role = req.user.role;
@@ -56,6 +56,6 @@ const updateUser = async (root, args, req) => {
 module.exports = {
   getUsers,
   getUserById,
-  updateUserStatus,
+  updateUserState,
   updateUser,
 };
