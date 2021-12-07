@@ -51,11 +51,16 @@ const approveInscription = async (root, args, req) => {
     const user = await User.findById(req.user._id);
     if(user.role !== "LEADER") throw new Error("El rol no puede crear aprobar la inscripción");
 
-    const { _id } = args;
-    await Inscription.findOneAndUpdate({ _id }, {
-      status: "ACCEPTED",
-      admissionDate: Date.now()
-    }, { new: true });
+    const { _id, status } = args;
+
+    const objectUpdate = {};
+    if (status === "ACCEPTED") {
+      objectUpdate["status"] = "ACCEPTED";
+      objectUpdate["admissionDate"] = Date.now();
+    } else if (status === "REJECTED") {
+      objectUpdate["status"] = "REJECTED";
+    }
+    await Inscription.findOneAndUpdate({ _id }, objectUpdate, { new: true });
     return "La inscripción se actualizó correctamente";
   } catch (error) {
     throw new Error(error);

@@ -23,7 +23,7 @@ const inscriptionSchema = gql`
 
   type Mutation {
     createInscription(projectId: ID!): String!
-    approveInscription(_id: ID!): String!
+    approveInscription(_id: ID!, status: Status!): String!
   }
 `
 

@@ -21,7 +21,7 @@ const inscriptionSchema = Schema({
     enum: ["ACCEPTED", "REJECTED", null],
     default: null,
   },
-  addmissionDate: {
+  admissionDate: {
     type: Date,
     default: null,
   },
