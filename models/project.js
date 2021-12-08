@@ -14,7 +14,7 @@ const ProjectSchema = Schema({
     required: [true, "Los objetivos específicos son obligatorios"],
   },
   budget: {
-    type: Number,
+    type: String,
     required: [true, "El presupuesto es obligatorio"],
   },
   startDate: {
@@ -38,7 +38,6 @@ const ProjectSchema = Schema({
   },
   phase: {
     type: String,
-    required: [true, "La fase es obligatoria"],
     enum: ["STARTED", "IN_PROGRESS", "FINISHED", null],
     default: null,
   }

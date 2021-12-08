@@ -11,7 +11,7 @@ const projectSchema = gql`
     name: String
     generalObjective: String
     specificObjectives: [String]
-    budget: Int
+    budget: String
     startDate: String
     endDate: String
     leader: User
@@ -35,7 +35,7 @@ const projectSchema = gql`
       name: String!
       generalObjective: String!
       specificObjectives: [String]!
-      budget: Int!
+      budget: String!
     ): String!
     approveProject(_id: ID!): String!
     updateProject(
@@ -43,7 +43,7 @@ const projectSchema = gql`
       name: String
       generalObjective: String
       specificObjectives: [String]
-      budget: Int
+      budget: String
     ): String!
   }
 `
