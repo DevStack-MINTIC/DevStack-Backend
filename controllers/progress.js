@@ -1,4 +1,4 @@
-const { Progress, Project, Inscription } = require("../models");
+const { Progress, Project, Inscription, User} = require("../models");
 
 const getProgressByProjectId = async (root, args, req) => {
   try {
