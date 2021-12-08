@@ -21,7 +21,7 @@ const getInscriptionsByStudentId = async (root, args, req) => {
     if(user.role !== "STUDENT") throw new Error("El rol no puede ver las inscripciones");
 
     const inscriptions = await Inscription.find({ studentId: req.user._id });
-    return inscriptions.map(inscription => inscription.projectId);
+    return inscriptions;
   } catch (error) {
     throw new Error(error);
   }
