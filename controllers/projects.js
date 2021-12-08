@@ -46,7 +46,8 @@ const approveProject = async (root, args, req) => {
     const { _id } = args;
     await Project.findOneAndUpdate({ _id }, {
       startDate: Date.now(),
-      status: "ACTIVE"
+      status: "ACTIVE",
+      phase: "STARTED"
     }, { new: true }).populate("leader");
     return "El proyecto se actualizó correctamente";
   } catch (error) {

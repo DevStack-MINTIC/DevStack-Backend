@@ -17,14 +17,7 @@ const createProgress = async (root, args, req) => {
     const inscription = await Inscription.findOne({ studentId: req.user._id });
     if(inscription?.status !== "ACCEPTED") throw new Error("El estudiante no se encuentra inscrito al proyecto");
 
-    const { projectId, description } = args;
-    const progress = Progress.find({ projectId });
-    if (progress.lenth === 0) {
-      await Project.findOneAndUpdate({ _id: projectId }, {
-        phase: "STARTED"
-      });
-    }
-    
+    const { projectId, description } = args;    
     await Progress.create({
       projectId,
       description,
